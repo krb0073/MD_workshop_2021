@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -N 04-production 
+#PBS -m abe
+#PBS -q comm_gpu_week
+#PBS -l nodes=1:ppn=1:gpus=1
+#PBS -l walltime=10:00:00
+module load atomistic/amber/20_gcc93_mpic341_cuda113
+cd $PBS_O_WORKDIR
+# I have to add the -AllowSmallBox due to the very small size of the system but normally DO NOT
+# put this in 
+$AMBERHOME/bin/pmemd.cuda -AllowSmallBox -O -i 03_Prod.in -o 03_Prod.out -p parm7 -c 02_Heat.ncrst -r 03_Prod.ncrst -x 03_Prod.nc -inf 03_Prod.info

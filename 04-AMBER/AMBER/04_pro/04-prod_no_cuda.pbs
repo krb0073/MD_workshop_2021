@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -N 04-production 
+#PBS -m abe
+#PBS -q comm_small_day
+#PBS -l nodes=1:ppn=1
+module load atomistic/amber/20_gcc93_mpic341
+cd $PBS_O_WORKDIR
+# I have to add the -AllowSmallBox due to the very small size of the system but normally DO NOT
+# put this in 
+$AMBERHOME/bin/pmemd -O -i 03_Prod.in -o 03_Prod.out -p parm7 -c 02_Heat.ncrst -r 03_Prod.ncrst -x 03_Prod.nc -inf 03_Prod.info
+# ther is no cuda on this the pairlist gets to small for pmemd.cuda 
+
