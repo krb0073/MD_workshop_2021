@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -N tleap_di-ala
+#PBS -m abe
+#PBS -q standby
+#PBS -l nodes=1:ppn=1
+
+
+module load atomistic/amber/20_gcc93_serial
+# we only need to run this on one core so no need to waste resources 
+cd $PBS_O_WORKDIR
+$AMBERHOME/bin/tleap -f make_system.txt
+# abmer home is where all the flies for amber are then we find the binary for tleap 
+# the -f option allows us to run the make_system.txt
