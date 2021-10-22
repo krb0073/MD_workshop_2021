@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -N 03_heat
+#PBS -m abe
+#PBS -q standby
+#PBS -l nodes=1:ppn=1
+
+
+module load atomistic/amber/20_gcc93_serial
+# we only need to run this on one core so no need to waste resources 
+cd $PBS_O_WORKDIR
+# we will run this on one core and one node with sander because the PME will not work with
+# any change of peridoic boundries 
+$AMBERHOME/bin/sander -O -i 02_Heat.in -o 02_Heat.out -p parm7 -c 01_Min.ncrst -r 02_Heat.ncrst -x 02_Heat.nc -inf 02_Heat.mdinfo
+# -x : the output trajectory file 
+

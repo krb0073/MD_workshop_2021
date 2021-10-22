@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -N 02_min
+#PBS -m abe
+#PBS -q standby
+#PBS -l nodes=1:ppn=1
+
+
+module load atomistic/amber/20_gcc93_serial
+# we only need to run this on one core so no need to waste resources 
+cd $PBS_O_WORKDIR
+# we will run this on one core and one node with sander because the PME will not work with
+# any change of peridoic boundries 
+ $AMBERHOME/bin/sander -O -i 01_Min.in -o 01_Min.out -p parm7 -c rst7 -r 01_Min.ncrst -inf 01_Min.mdinfo
+# here is the flagg 
+# -O : overwirte any files with the same name 
+#-i : input config 01_Min.in
+#-o : the output log of the sim. 01_Min.out
+#-p : the parameter file parm7
+#-c : the cordiante file rst7
+#-r : the file to restart from 01_Min.ncrst
+#-inf : The infroamtion file 
